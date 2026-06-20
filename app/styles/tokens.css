@@ -1,0 +1,103 @@
+/* tokens.css - the workshop house design system (oklch).
+ *
+ * Framework-neutral. Import once at the app root, before component styles.
+ * Every value is a CSS custom property so a build can re-skin by overriding a
+ * handful of tokens, not editing components. Colors are oklch() only; body-text
+ * pairs are chosen to clear WCAG AA (>= 4.5:1). Dark mode overrides live in the
+ * same file under html.dark so the two themes always ship together.
+ *
+ * To re-brand for a client: change --hue (and optionally --hue-accent) and the
+ * two or three primary ramp steps. The rest cascades.
+ */
+
+:root {
+  /* Native UI (form controls, scrollbars, system colors) follows the theme.
+   * Tracks the .dark class below, so it matches both the manual toggle and the
+   * auto/system resolution done by the pre-paint script. (web.dev/light-dark,
+   * MDN color-scheme - baseline since 2024.) */
+  color-scheme: light;
+
+  /* --- brand hue knobs (calm clinical reskin: soft teal / blue-green) --- */
+  --hue: 195;          /* primary brand hue (deg): cool restful teal */
+  --hue-accent: 165;   /* secondary/accent hue: green-teal */
+  --chroma: 0.07;      /* brand saturation: low, for a calm clinical feel */
+
+  /* --- semantic surfaces & text (light) --- */
+  --bg:        oklch(0.99 0.004 var(--hue));
+  --surface:   oklch(0.97 0.006 var(--hue));
+  --surface-2: oklch(0.94 0.008 var(--hue));
+  --border:    oklch(0.88 0.01 var(--hue));
+  --text:      oklch(0.22 0.02 var(--hue));   /* on --bg: AA */
+  --text-soft: oklch(0.44 0.02 var(--hue));   /* secondary text: AA on --bg */
+  --text-faint:oklch(0.58 0.015 var(--hue));  /* hints/placeholders */
+
+  /* --- brand ramp --- */
+  --primary:      oklch(0.55 var(--chroma) var(--hue));
+  --primary-hover:oklch(0.49 var(--chroma) var(--hue));
+  --primary-text: oklch(0.99 0.01 var(--hue)); /* text on --primary: AA */
+  --accent:       oklch(0.70 0.15 var(--hue-accent));
+
+  /* --- status --- */
+  --ok:    oklch(0.62 0.15 150);
+  --warn:  oklch(0.75 0.16 75);
+  --danger:oklch(0.58 0.20 27);
+
+  /* --- type scale (1.250 major third), fluid base --- */
+  --font-sans: var(--font-app, system-ui), -apple-system, Segoe UI, Roboto, sans-serif;
+  --font-mono: var(--font-code, ui-monospace), SFMono-Regular, Menlo, monospace;
+  --text-base: clamp(1rem, 0.95rem + 0.25vw, 1.0625rem);
+  --step--1: calc(var(--text-base) / 1.25);
+  --step-0:  var(--text-base);
+  --step-1:  calc(var(--text-base) * 1.25);
+  --step-2:  calc(var(--text-base) * 1.5625);
+  --step-3:  calc(var(--text-base) * 1.953);
+  --step-4:  calc(var(--text-base) * 2.441);
+  --leading: 1.55;
+  --leading-tight: 1.15;
+
+  /* --- spacing scale (rem) --- */
+  --space-1: 0.25rem; --space-2: 0.5rem;  --space-3: 0.75rem;
+  --space-4: 1rem;    --space-5: 1.5rem;  --space-6: 2rem;
+  --space-7: 3rem;    --space-8: 4rem;    --space-9: 6rem;
+
+  /* --- radii, shadow, motion --- */
+  --radius-sm: 0.375rem; --radius: 0.625rem; --radius-lg: 1rem; --radius-full: 999px;
+  --shadow-1: 0 1px 2px oklch(0.2 0.02 var(--hue) / 0.08);
+  --shadow-2: 0 4px 16px oklch(0.2 0.02 var(--hue) / 0.12);
+  --dur-1: 120ms; --dur-2: 240ms; --dur-3: 400ms;
+  --ease: cubic-bezier(0.2, 0.7, 0.2, 1);
+
+  /* --- layout --- */
+  --measure: 68ch;        /* readable line length */
+  --container: 72rem;     /* max content width */
+
+  /* --- a11y prefs (mirrored by the pre-paint script) --- */
+  --text-scale: 1;        /* user font-size preference multiplier */
+}
+
+html.dark {
+  color-scheme: dark;
+  /* --- brand hue knobs (calm clinical reskin, mirrored for dark) --- */
+  --hue: 195;          /* cool restful teal */
+  --hue-accent: 165;   /* green-teal */
+  --chroma: 0.07;      /* low chroma, calm clinical */
+  --bg:        oklch(0.17 0.015 var(--hue));
+  --surface:   oklch(0.21 0.018 var(--hue));
+  --surface-2: oklch(0.25 0.02 var(--hue));
+  --border:    oklch(0.32 0.02 var(--hue));
+  --text:      oklch(0.94 0.01 var(--hue));   /* on dark --bg: AA */
+  --text-soft: oklch(0.78 0.015 var(--hue));
+  --text-faint:oklch(0.62 0.015 var(--hue));
+  --primary:      oklch(0.72 var(--chroma) var(--hue));
+  --primary-hover:oklch(0.78 var(--chroma) var(--hue));
+  --primary-text: oklch(0.18 0.02 var(--hue));
+  --accent:       oklch(0.78 0.14 var(--hue-accent));
+  --shadow-1: 0 1px 2px oklch(0 0 0 / 0.4);
+  --shadow-2: 0 6px 24px oklch(0 0 0 / 0.5);
+}
+
+/* Higher-contrast preference (mirrored by the pre-paint script). */
+html[data-contrast="more"] {
+  --text-soft: var(--text);
+  --border: var(--text-faint);
+}

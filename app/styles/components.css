@@ -1,0 +1,54 @@
+/* components.css - minimal house primitives. Import AFTER tokens.css + base.css,
+ * BEFORE page-specific styles. Optional: skip it if a build needs none of these.
+ *
+ * Deliberately tiny - the few primitives every build re-wrote by hand (button,
+ * form field, card). Not a component library; just the floor so a build styles
+ * a button and an input from a class instead of from scratch. Added after the
+ * demo-waitlist build hand-wrote all three (ADR 0026). Grow it only when a new
+ * primitive recurs across builds.
+ */
+
+/* --- Button --- */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: var(--space-2);
+  padding: var(--space-3) var(--space-5);
+  background: var(--primary); color: var(--primary-text);
+  border: 1px solid transparent; border-radius: var(--radius);
+  font-weight: 600; line-height: 1; cursor: pointer;
+  transition: background var(--dur-1) var(--ease), border-color var(--dur-1) var(--ease);
+}
+.btn:hover { background: var(--primary-hover); }
+.btn:disabled { opacity: 0.55; cursor: not-allowed; }
+
+.btn-ghost {
+  background: transparent; color: var(--text);
+  border-color: var(--border);
+}
+.btn-ghost:hover { background: var(--surface-2); }
+
+/* --- Form field (label + control + inline error) --- */
+.field { display: flex; flex-direction: column; gap: var(--space-2); }
+.field > label { font-weight: 600; font-size: var(--step--1); }
+.field :is(input, textarea, select) {
+  padding: var(--space-3) var(--space-4);
+  background: var(--bg); color: var(--text);
+  border: 1px solid var(--border); border-radius: var(--radius);
+}
+.field :is(input, textarea, select)[aria-invalid="true"] { border-color: var(--danger); }
+.field .error { color: var(--danger); font-size: var(--step--1); min-height: 1.2em; }
+/* (.field controls inherit the visible focus ring from base.css :focus-visible.) */
+
+/* --- Card --- */
+.card {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--radius-lg); padding: var(--space-5); box-shadow: var(--shadow-1);
+}
+
+/* --- Inline status callout (e.g. form success) --- */
+.callout {
+  padding: var(--space-4); background: var(--surface-2);
+  border-radius: var(--radius); border-inline-start: 4px solid var(--primary);
+}
+.callout-ok { border-inline-start-color: var(--ok); }
+.callout-warn { border-inline-start-color: var(--warn); }
+.callout-danger { border-inline-start-color: var(--danger); }
