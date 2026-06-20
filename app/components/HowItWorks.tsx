@@ -9,6 +9,7 @@ export function HowItWorks() {
   return (
     <section className="section" aria-labelledby="how-title">
       <div className="container">
+        <p className="section-eyebrow">{t.eyebrows.steps}</p>
         <h2 id="how-title">{t.steps.title}</h2>
         <ol className="steps" role="list">
           {t.steps.items.map((step) => (

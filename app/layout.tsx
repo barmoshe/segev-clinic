@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Frank_Ruhl_Libre } from "next/font/google";
+import { Frank_Ruhl_Libre, Assistant } from "next/font/google";
 import { PREPAINT_SCRIPT } from "@/app/lib/prepaint";
 import { clinic } from "@/app/lib/clinic";
 import { getDict } from "@/app/lib/i18n";
@@ -9,12 +9,19 @@ import "@/app/styles/base.css";
 import "@/app/styles/components.css";
 import "@/app/styles/page.css";
 
-// Brand font (Hebrew + Latin): Frank Ruhl Libre, an editorial serif that reads
-// calm and clinical. Restrained weight ladder rather than a second family.
-const frankRuhl = Frank_Ruhl_Libre({
+// Type pairing (both Hebrew + Latin): Frank Ruhl Libre, an editorial serif, for
+// display headings only; Assistant, a clean modern Hebrew/Latin sans, for body
+// and UI. The two are designed to sit together and read calm and contemporary.
+const serif = Frank_Ruhl_Libre({
   subsets: ["latin", "hebrew"],
-  weight: ["400", "500", "700"],
-  variable: "--font-app",
+  weight: ["500", "700"],
+  variable: "--font-serif",
+  display: "swap",
+});
+const sans = Assistant({
+  subsets: ["latin", "hebrew"],
+  weight: ["400", "500", "600", "700"],
+  variable: "--font-sans-base",
   display: "swap",
 });
 
@@ -56,7 +63,7 @@ export default function RootLayout({
     <html
       lang="en"
       dir="ltr"
-      className={frankRuhl.variable}
+      className={`${serif.variable} ${sans.variable}`}
       suppressHydrationWarning
     >
       <head>

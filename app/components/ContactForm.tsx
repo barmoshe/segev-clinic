@@ -49,6 +49,7 @@ export function ContactForm() {
       aria-labelledby="contact-title"
     >
       <div className="container narrow">
+        <p className="section-eyebrow">{t.eyebrows.contact}</p>
         <h2 id="contact-title">{t.contact.title}</h2>
         <p className="section-lead">{t.contact.lead}</p>
 

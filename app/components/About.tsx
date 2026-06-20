@@ -8,6 +8,7 @@ export function About() {
   return (
     <section className="section" aria-labelledby="about-title">
       <div className="container narrow">
+        <p className="section-eyebrow">{t.eyebrows.about}</p>
         <h2 id="about-title">{t.about.title}</h2>
         {t.about.paragraphs.map((p, i) => (
           <p key={i}>{p}</p>

@@ -14,6 +14,7 @@ export function Services() {
       aria-labelledby="services-title"
     >
       <div className="container">
+        <p className="section-eyebrow">{t.eyebrows.services}</p>
         <h2 id="services-title">{t.services.title}</h2>
         <p className="section-lead">{t.services.lead}</p>
         <ul className="card-grid" role="list">

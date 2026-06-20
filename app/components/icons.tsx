@@ -11,7 +11,8 @@ export type IconName =
   | "pulse"
   | "prescription"
   | "referral"
-  | "spark";
+  | "spark"
+  | "clock";
 
 const base = (props: SVGProps<SVGSVGElement>) => ({
   width: "1em",
@@ -69,6 +70,13 @@ const PATHS: Record<IconName, React.ReactNode> = {
     <>
       <path d="M12 3v4M12 17v4M3 12h4M17 12h4" />
       <path d="M6.5 6.5 9 9M15 15l2.5 2.5M17.5 6.5 15 9M9 15l-2.5 2.5" />
+    </>
+  ),
+  // Hours: a clock.
+  clock: (
+    <>
+      <circle cx="12" cy="12" r="8.5" />
+      <path d="M12 7.5V12l3 2" />
     </>
   ),
 };

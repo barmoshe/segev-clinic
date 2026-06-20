@@ -9,6 +9,7 @@ export function Faq() {
   return (
     <section className="section" aria-labelledby="faq-title">
       <div className="container narrow">
+        <p className="section-eyebrow">{t.eyebrows.faq}</p>
         <h2 id="faq-title">{t.faq.title}</h2>
         <div className="faq-list">
           {t.faq.items.map((item) => (

@@ -24,8 +24,14 @@ body {
   text-rendering: optimizeLegibility;
 }
 
-/* Headings: tighter leading, balanced wrapping. */
-h1, h2, h3, h4 { line-height: var(--leading-tight); text-wrap: balance; }
+/* Headings: editorial serif display, tighter leading, balanced wrapping. */
+h1, h2, h3, h4 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  line-height: var(--leading-tight);
+  letter-spacing: -0.01em;
+  text-wrap: balance;
+}
 h1 { font-size: var(--step-4); }
 h2 { font-size: var(--step-3); }
 h3 { font-size: var(--step-2); }

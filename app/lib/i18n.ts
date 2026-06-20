@@ -26,15 +26,24 @@ export type Dict = {
     heLabel: string;
     switchedTo: string;
   };
-  header: { whatsapp: string };
+  header: { book: string };
+  eyebrows: {
+    about: string;
+    services: string;
+    steps: string;
+    visit: string;
+    faq: string;
+    contact: string;
+  };
   hero: {
     eyebrow: string;
     promise: string;
     trust: string[];
     ctaPrimary: string;
     ctaSecondary: string;
+    portraitAlt: string;
   };
-  about: { title: string; paragraphs: string[] };
+  about: { title: string; paragraphs: string[]; photoAlt: string };
   services: { title: string; lead: string; items: Service[] };
   steps: { title: string; items: Step[] };
   hoursLocation: {
@@ -47,6 +56,7 @@ export type Dict = {
     mapLink: string;
     callLabel: string;
     whatsappLink: string;
+    photoAlt: string;
   };
   faq: { title: string; items: FaqItem[] };
   contact: {
@@ -81,14 +91,23 @@ const en: Dict = {
     heLabel: "עברית",
     switchedTo: "Language set to English",
   },
-  header: { whatsapp: "WhatsApp" },
+  header: { book: "Book a visit" },
+  eyebrows: {
+    about: "About",
+    services: "Services",
+    steps: "How it works",
+    visit: "Visit",
+    faq: "Good to know",
+    contact: "Get in touch",
+  },
   hero: {
     eyebrow: clinic.role.en,
     promise:
       "Personal medicine at your pace: time to listen, explain and follow up, without waiting on the line.",
-    trust: ["House calls", "Private and flexible", "Direct WhatsApp line"],
-    ctaPrimary: "Message on WhatsApp",
+    trust: ["House calls", "Private and flexible", "Care for all ages"],
+    ctaPrimary: "Book a visit",
     ctaSecondary: "See services",
+    portraitAlt: "Portrait of the clinic's family physician",
   },
   about: {
     title: "A little about me",
@@ -96,6 +115,7 @@ const en: Dict = {
       `I'm ${clinic.doctorName.en}, a family physician. After years in busy clinics I chose a different path: a small private practice where every visit has enough time. I believe good medicine starts with listening, and that understanding the person in front of you makes it easier to support them over time.`,
       "My background includes specialty training in family medicine and experience caring for patients of every age, from young families to adults managing ongoing conditions. My approach is calm and practical: explain things plainly, avoid unnecessary tests, and stay reachable when it matters.",
     ],
+    photoAlt: "The clinic reception and waiting area",
   },
   services: {
     title: "What a private visit covers",
@@ -172,6 +192,7 @@ const en: Dict = {
     mapLink: "Open in OpenStreetMap",
     callLabel: "Call",
     whatsappLink: "Message on WhatsApp",
+    photoAlt: "The clinic reception and waiting area",
   },
   faq: {
     title: "Frequently asked questions",
@@ -232,14 +253,23 @@ const he: Dict = {
     heLabel: "עברית",
     switchedTo: "השפה הוגדרה לעברית",
   },
-  header: { whatsapp: "וואטסאפ" },
+  header: { book: "קביעת ביקור" },
+  eyebrows: {
+    about: "אודות",
+    services: "השירותים",
+    steps: "איך זה עובד",
+    visit: "ביקור",
+    faq: "טוב לדעת",
+    contact: "יצירת קשר",
+  },
   hero: {
     eyebrow: clinic.role.he,
     promise:
       "רפואה אישית, בקצב שלכם: זמן להקשיב, להסביר וללוות, בלי להמתין על הקו.",
-    trust: ["ביקורי בית", "פרטי וגמיש", "קו וואטסאפ ישיר"],
-    ctaPrimary: "כתבו לי בוואטסאפ",
+    trust: ["ביקורי בית", "פרטי וגמיש", "מתאים לכל הגילאים"],
+    ctaPrimary: "קביעת ביקור",
     ctaSecondary: "מה כולל ביקור",
+    portraitAlt: "דיוקן של רופאת המשפחה במרפאה",
   },
   about: {
     title: "קצת עליי",
@@ -247,6 +277,7 @@ const he: Dict = {
       `שמי ${clinic.doctorName.he}, רופא משפחה. אחרי שנים של עבודה במרפאות עמוסות בחרתי בדרך אחרת: מרפאה פרטית קטנה שבה לכל פגישה יש מספיק זמן. אני מאמין שרפואה טובה מתחילה בהקשבה, ושכשמבינים את האדם שמולך קל יותר ללוות אותו לאורך זמן.`,
       "ההכשרה שלי כוללת התמחות ברפואת משפחה וניסיון בליווי מטופלים בכל הגילאים, ממשפחות צעירות ועד מבוגרים עם מצבים נמשכים. הגישה שלי שקטה ומעשית: להסביר בגובה העיניים, להימנע מבדיקות מיותרות, ולהיות זמין כשצריך.",
     ],
+    photoAlt: "אזור הקבלה וההמתנה במרפאה",
   },
   services: {
     title: "מה כולל ביקור פרטי",
@@ -323,6 +354,7 @@ const he: Dict = {
     mapLink: "פתיחת מפה במפת רחובות",
     callLabel: "חיוג",
     whatsappLink: "שליחת הודעה בוואטסאפ",
+    photoAlt: "אזור הקבלה וההמתנה במרפאה",
   },
   faq: {
     title: "שאלות נפוצות",

@@ -1,8 +1,9 @@
 /* page.css - clinic-specific layout. Imported last (after tokens/base/components).
- * Refined calm-clinical: confident teal + warm accent, soft depth, line icons,
+ * Premium calm-clinical: an editorial split hero with a clinic "at a glance"
+ * card, section eyebrows, gradient-tinted icon tiles, smooth border-glow hovers,
  * a tracked step flow, a floating WhatsApp button. oklch tokens + logical
  * properties only (LTR/RTL safe). Motion is transform/opacity and honors
- * prefers-reduced-motion (base.css neutralizes animation under reduce). */
+ * prefers-reduced-motion (base.css neutralizes animation/transition under reduce). */
 
 /* --- visually-hidden helper --- */
 .visually-hidden {
@@ -19,24 +20,31 @@
 
 /* --- shared section rhythm --- */
 .section {
-  padding-block: var(--space-9);
+  padding-block: var(--space-8);
 }
 .section-alt {
-  background: var(--surface);
+  background: var(--surface-2);
+}
+.section-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin-bottom: var(--space-2);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-size: var(--step--1);
+  font-weight: 700;
+  color: var(--primary);
+}
+.section-eyebrow::before {
+  content: "";
+  inline-size: 1.5rem;
+  block-size: 2px;
+  border-radius: var(--radius-full);
+  background: var(--gradient-brand);
 }
 .section h2 {
   margin-bottom: var(--space-4);
-}
-/* A short accent bar under each section title for rhythm and character. */
-.section h2::after,
-.hours-contact h3::after {
-  content: "";
-  display: block;
-  width: 2.5rem;
-  height: 3px;
-  margin-top: var(--space-3);
-  border-radius: var(--radius-full);
-  background: linear-gradient(90deg, var(--primary), var(--accent));
 }
 .section-lead {
   color: var(--text-soft);
@@ -59,7 +67,7 @@
   position: sticky;
   top: 0;
   z-index: 50;
-  background: oklch(0.99 0.006 var(--hue) / 0.82);
+  background: oklch(0.984 0.009 var(--hue) / 0.82);
   backdrop-filter: blur(10px);
   border-bottom: 1px solid var(--border);
 }
@@ -73,7 +81,19 @@ html.dark .site-header {
   gap: var(--space-4);
   padding-block: var(--space-3);
 }
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  text-decoration: none;
+  color: inherit;
+}
+.brand__logo {
+  inline-size: 2.25rem;
+  block-size: 2.25rem;
+}
 .wordmark {
+  font-family: var(--font-display);
   font-weight: 700;
   font-size: var(--step-1);
 }
@@ -116,49 +136,65 @@ html.dark .site-header {
 .hero {
   position: relative;
   overflow: clip;
-  padding-block: var(--space-9);
-  background:
-    radial-gradient(120% 130% at 100% 0%, var(--surface) 0%, var(--bg) 55%);
+  padding-block: var(--space-8) var(--space-9);
 }
-.hero-glow {
+.hero-bg {
   position: absolute;
-  inset-block-start: -25%;
-  inset-inline-end: -10%;
-  inline-size: 42rem;
-  block-size: 42rem;
-  max-inline-size: 85%;
+  inset: 0;
+  z-index: 0;
   pointer-events: none;
   background:
-    radial-gradient(circle at 70% 30%, var(--primary-soft) 0%, transparent 60%),
-    radial-gradient(circle at 30% 70%, var(--accent-soft) 0%, transparent 55%);
-  filter: blur(6px);
-  opacity: 0.9;
-  animation: hero-float 14s var(--ease) infinite alternate;
+    radial-gradient(58% 75% at 86% -8%, oklch(0.62 0.13 var(--hue) / 0.16), transparent 60%),
+    radial-gradient(46% 60% at 102% 108%, oklch(0.72 0.10 var(--hue-accent) / 0.10), transparent 60%);
 }
-@keyframes hero-float {
-  from { transform: translate3d(0, 0, 0) scale(1); }
-  to   { transform: translate3d(-2%, 3%, 0) scale(1.06); }
+.hero-bg::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(
+    oklch(0.5 0.02 var(--hue) / 0.10) 1px,
+    transparent 1.5px
+  );
+  background-size: 22px 22px;
+  -webkit-mask-image: radial-gradient(72% 70% at 82% 12%, #000, transparent 72%);
+  mask-image: radial-gradient(72% 70% at 82% 12%, #000, transparent 72%);
 }
-.hero-inner {
+.hero-grid {
   position: relative;
-  max-width: 56rem;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: 1.08fr 0.92fr;
+  gap: var(--space-8);
+  align-items: center;
+}
+.hero-copy {
+  max-width: 34rem;
 }
 .hero-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
   color: var(--primary);
   font-weight: 700;
-  letter-spacing: 0.04em;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
   font-size: var(--step--1);
   margin-bottom: var(--space-3);
 }
+.hero-eyebrow__dot {
+  inline-size: 0.5rem;
+  block-size: 0.5rem;
+  border-radius: var(--radius-full);
+  background: var(--gradient-brand);
+}
 .hero-title {
   font-size: var(--step-4);
+  letter-spacing: -0.01em;
   margin-bottom: var(--space-4);
 }
 .hero-promise {
   font-size: var(--step-1);
   color: var(--text-soft);
-  max-width: 46ch;
   margin-bottom: var(--space-5);
 }
 .hero-trust {
@@ -173,15 +209,104 @@ html.dark .site-header {
   font-size: var(--step--1);
   font-weight: 600;
   color: var(--text-soft);
-  background: var(--bg);
+  background: var(--surface);
   border: 1px solid var(--border);
   border-radius: var(--radius-full);
   padding: var(--space-2) var(--space-4);
+  box-shadow: var(--shadow-1);
 }
 .hero-actions {
   display: flex;
   flex-wrap: wrap;
   gap: var(--space-3);
+}
+
+/* --- hero visual: clinic "at a glance" card --- */
+.hero-visual {
+  position: relative;
+  justify-self: center;
+  inline-size: 100%;
+  max-inline-size: 23rem;
+  animation: hero-rise 0.7s var(--ease) both;
+}
+@keyframes hero-rise {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.hero-portrait {
+  position: relative;
+  margin: 0;
+}
+.hero-portrait > img {
+  inline-size: 100%;
+  block-size: auto;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+  object-position: top center;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-2);
+}
+.hero-portrait__badge {
+  position: absolute;
+  inset-block-end: var(--space-4);
+  inset-inline-start: var(--space-4);
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding-inline: var(--space-2) var(--space-4);
+  padding-block: var(--space-2);
+  background: oklch(0.99 0.005 var(--hue) / 0.9);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-full);
+  box-shadow: var(--shadow-1);
+  backdrop-filter: blur(8px);
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: var(--step--1);
+  color: var(--text);
+}
+html.dark .hero-portrait__badge {
+  background: oklch(0.21 0.02 230 / 0.85);
+}
+.hero-portrait__badge img {
+  inline-size: 1.5rem;
+  block-size: 1.5rem;
+}
+
+/* --- about (bio + clinic photo) --- */
+.about-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-8);
+  align-items: center;
+}
+.about-copy {
+  max-width: 38rem;
+}
+.about-copy p + p {
+  margin-top: var(--space-4);
+}
+.about-media {
+  margin: 0;
+}
+.about-media img {
+  inline-size: 100%;
+  block-size: auto;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-2);
+}
+@media (max-width: 60rem) {
+  .about-grid {
+    grid-template-columns: 1fr;
+    gap: var(--space-6);
+  }
+  .about-media {
+    order: -1;
+  }
 }
 
 /* --- card grids (services) --- */
@@ -195,25 +320,30 @@ html.dark .site-header {
 .service-card {
   display: flex;
   flex-direction: column;
-  transition: transform var(--dur-2) var(--ease), box-shadow var(--dur-2) var(--ease),
-    border-color var(--dur-2) var(--ease);
+  transition: box-shadow var(--dur-2) var(--ease), border-color var(--dur-2) var(--ease);
 }
 .service-card:hover {
-  transform: translateY(-3px);
-  box-shadow: var(--shadow-2);
-  border-color: var(--primary-soft);
+  border-color: transparent;
+  box-shadow: var(--shadow-2), 0 0 0 1.5px var(--ring);
 }
 .service-card__icon {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  inline-size: 2.75rem;
-  block-size: 2.75rem;
+  inline-size: 3rem;
+  block-size: 3rem;
   border-radius: var(--radius);
   background: var(--primary-soft);
   color: var(--primary);
-  font-size: 1.5rem;
+  font-size: 1.6rem;
   margin-bottom: var(--space-3);
+  transition: background var(--dur-2) var(--ease), color var(--dur-2) var(--ease),
+    transform var(--dur-2) var(--ease);
+}
+.service-card:hover .service-card__icon {
+  background: var(--gradient-brand);
+  color: oklch(0.99 0.01 var(--hue));
+  transform: rotate(-4deg) scale(1.06);
 }
 .service-card h3 {
   font-size: var(--step-1);
@@ -240,6 +370,11 @@ html.dark .site-header {
   padding: var(--space-5);
   padding-inline-start: var(--space-6);
   box-shadow: var(--shadow-1);
+  transition: box-shadow var(--dur-2) var(--ease), border-color var(--dur-2) var(--ease);
+}
+.step-card:hover {
+  box-shadow: var(--shadow-2);
+  border-color: var(--ring);
 }
 .step-card::before {
   content: "";
@@ -248,17 +383,17 @@ html.dark .site-header {
   inset-inline-start: 0;
   inline-size: 4px;
   border-radius: var(--radius-full);
-  background: linear-gradient(var(--primary), var(--accent));
+  background: var(--gradient-brand);
 }
 .step-num {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  inline-size: 2.5rem;
-  block-size: 2.5rem;
+  inline-size: 2.75rem;
+  block-size: 2.75rem;
   border-radius: var(--radius-full);
-  background: var(--primary);
-  color: var(--primary-text);
+  background: var(--gradient-brand);
+  color: oklch(0.99 0.01 var(--hue));
   font-weight: 700;
   font-size: var(--step-1);
   margin-bottom: var(--space-3);
@@ -280,11 +415,35 @@ html.dark .site-header {
 }
 
 /* --- hours + location --- */
-.hours-grid {
+.hours-layout {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr));
-  gap: var(--space-7);
-  align-items: start;
+  grid-template-columns: 1.05fr 0.95fr;
+  gap: var(--space-8);
+  align-items: center;
+  margin-top: var(--space-5);
+}
+.hours-media {
+  margin: 0;
+}
+.hours-media img {
+  inline-size: 100%;
+  block-size: auto;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-2);
+}
+.hours-detail {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+}
+@media (max-width: 60rem) {
+  .hours-layout {
+    grid-template-columns: 1fr;
+    gap: var(--space-6);
+  }
 }
 .hours-table {
   width: 100%;
@@ -341,10 +500,14 @@ html.dark .site-header {
   border: 1px solid var(--border);
   border-radius: var(--radius);
   padding: var(--space-4) var(--space-5);
-  transition: border-color var(--dur-1) var(--ease);
+  transition: border-color var(--dur-1) var(--ease), box-shadow var(--dur-1) var(--ease);
+}
+.faq-item:hover {
+  border-color: var(--ring);
 }
 .faq-item[open] {
-  border-color: var(--primary-soft);
+  border-color: var(--ring);
+  box-shadow: var(--shadow-1);
 }
 .faq-item > summary {
   cursor: pointer;
@@ -366,7 +529,9 @@ html.dark .site-header {
 
 /* --- contact form --- */
 .section-contact {
-  background: linear-gradient(var(--surface), var(--bg));
+  background:
+    radial-gradient(60% 100% at 50% 0%, var(--surface-2) 0%, transparent 70%),
+    var(--bg);
 }
 .contact-form {
   display: flex;
@@ -409,12 +574,13 @@ html.dark .site-header {
   box-shadow: var(--shadow-2);
   font-weight: 700;
   text-decoration: none;
-  transition: transform var(--dur-1) var(--ease), background var(--dur-1) var(--ease);
+  transition: transform var(--dur-1) var(--ease), background var(--dur-1) var(--ease),
+    box-shadow var(--dur-1) var(--ease);
 }
 .wa-fab:hover {
   background: var(--whatsapp-hover);
   color: var(--whatsapp-text);
-  transform: translateY(-2px);
+  transform: scale(1.04);
 }
 .wa-fab__glyph {
   font-size: 1.5em;
@@ -440,7 +606,7 @@ html.dark .site-header {
 .site-footer {
   padding-block: var(--space-6);
   border-top: 1px solid var(--border);
-  background: var(--surface);
+  background: var(--surface-2);
 }
 .footer-note {
   color: var(--text-faint);
@@ -448,12 +614,22 @@ html.dark .site-header {
   max-width: none;
 }
 
-/* --- responsive tightening for small screens --- */
+/* --- responsive --- */
+@media (max-width: 60rem) {
+  .hero-grid {
+    grid-template-columns: 1fr;
+    gap: var(--space-8);
+  }
+  .hero-copy {
+    max-width: none;
+  }
+  .hero-visual {
+    justify-self: stretch;
+    max-inline-size: 26rem;
+  }
+}
 @media (max-width: 30rem) {
   .section {
-    padding-block: var(--space-7);
-  }
-  .hero {
     padding-block: var(--space-7);
   }
   .hero-actions .btn,

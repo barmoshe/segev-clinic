@@ -20,14 +20,17 @@
   --hue-accent: 52;    /* warm sand/amber accent, complementary to the teal */
   --chroma: 0.10;      /* brand saturation: present but calm */
 
-  /* --- semantic surfaces & text (light) --- */
-  --bg:        oklch(0.99 0.006 var(--hue));
-  --surface:   oklch(0.975 0.009 var(--hue));
-  --surface-2: oklch(0.945 0.013 var(--hue));
-  --border:    oklch(0.88 0.016 var(--hue));
-  --text:      oklch(0.24 0.025 var(--hue));   /* on --bg: AA */
-  --text-soft: oklch(0.46 0.025 var(--hue));   /* secondary text: AA on --bg */
-  --text-faint:oklch(0.58 0.02 var(--hue));    /* hints/placeholders */
+  /* --- semantic surfaces & text (light) ---
+   * A soft, clearly-light canvas with a hint of tint, brighter cards that lift
+   * off it via shadow, and a gentle alt band. Depth without going stark white or
+   * dark. */
+  --bg:        oklch(0.984 0.009 var(--hue));  /* soft, barely-tinted light canvas */
+  --surface:   oklch(0.998 0.003 var(--hue));  /* bright cards that pop off --bg */
+  --surface-2: oklch(0.955 0.014 var(--hue));  /* gentle tinted band (alt sections) */
+  --border:    oklch(0.88 0.018 var(--hue));
+  --text:      oklch(0.23 0.026 var(--hue));   /* on --bg: AA */
+  --text-soft: oklch(0.45 0.026 var(--hue));   /* secondary text: AA on --bg */
+  --text-faint:oklch(0.57 0.02 var(--hue));    /* hints/placeholders */
 
   /* --- brand ramp --- */
   --primary:      oklch(0.52 var(--chroma) var(--hue));
@@ -41,6 +44,13 @@
   --whatsapp:      oklch(0.55 0.15 150);
   --whatsapp-hover:oklch(0.49 0.15 150);
   --whatsapp-text: oklch(0.99 0.02 150);
+  --wa-bubble:     oklch(0.93 0.08 145);   /* outgoing chat bubble (light) */
+  --wa-bubble-text:oklch(0.28 0.06 145);
+
+  /* --- effects --- */
+  --gradient-brand: linear-gradient(135deg,
+    oklch(0.54 0.12 var(--hue)), oklch(0.70 0.10 var(--hue-accent)));
+  --ring: oklch(0.55 0.12 var(--hue));     /* hover/active ring color */
 
   /* --- status --- */
   --ok:    oklch(0.62 0.15 150);
@@ -48,7 +58,8 @@
   --danger:oklch(0.58 0.20 27);
 
   /* --- type scale (1.250 major third), fluid base --- */
-  --font-sans: var(--font-app, system-ui), -apple-system, Segoe UI, Roboto, sans-serif;
+  --font-sans: var(--font-sans-base, system-ui), -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font-display: var(--font-serif, Georgia), Georgia, "Times New Roman", serif;
   --font-mono: var(--font-code, ui-monospace), SFMono-Regular, Menlo, monospace;
   --text-base: clamp(1rem, 0.95rem + 0.25vw, 1.0625rem);
   --step--1: calc(var(--text-base) / 1.25);
@@ -103,6 +114,11 @@ html.dark {
   --whatsapp:      oklch(0.60 0.15 150);
   --whatsapp-hover:oklch(0.66 0.15 150);
   --whatsapp-text: oklch(0.99 0.02 150);
+  --wa-bubble:     oklch(0.42 0.08 145);
+  --wa-bubble-text:oklch(0.96 0.02 145);
+  --gradient-brand: linear-gradient(135deg,
+    oklch(0.60 0.12 var(--hue)), oklch(0.74 0.10 var(--hue-accent)));
+  --ring: oklch(0.72 0.12 var(--hue));
   --shadow-1: 0 1px 2px oklch(0 0 0 / 0.4), 0 4px 14px oklch(0 0 0 / 0.4);
   --shadow-2: 0 2px 8px oklch(0 0 0 / 0.5), 0 18px 44px oklch(0 0 0 / 0.55);
 }

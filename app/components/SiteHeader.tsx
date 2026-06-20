@@ -2,27 +2,30 @@
 
 import { useLang } from "@/app/lib/LangContext";
 import { clinic } from "@/app/lib/clinic";
-import { defaultWhatsAppHref } from "@/app/lib/contact";
 import { LangToggle } from "./LangToggle";
-import { WhatsAppGlyph } from "./icons";
 
-// Sticky header: clinic wordmark + language toggle + a WhatsApp primary CTA.
+// Sticky header: clinic wordmark + language toggle + a neutral booking CTA that
+// scrolls to the contact section (where WhatsApp is the primary channel).
 export function SiteHeader() {
   const { t, lang } = useLang();
   return (
     <header className="site-header">
       <div className="container site-header-inner">
-        <span className="wordmark">{clinic.clinicName[lang]}</span>
+        <a className="brand" href="#main" aria-label={clinic.clinicName[lang]}>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            className="brand__logo"
+            src="/logo-mark.png"
+            alt=""
+            width={36}
+            height={36}
+          />
+          <span className="wordmark">{clinic.clinicName[lang]}</span>
+        </a>
         <div className="header-actions">
           <LangToggle />
-          <a
-            className="btn btn-whatsapp btn-sm"
-            href={defaultWhatsAppHref(t)}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <WhatsAppGlyph />
-            <span>{t.header.whatsapp}</span>
+          <a className="btn btn-sm" href="#contact">
+            {t.header.book}
           </a>
         </div>
       </div>
