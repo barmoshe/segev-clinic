@@ -1,18 +1,11 @@
-import { SiteHeader } from "@/app/components/SiteHeader";
-import { Hero } from "@/app/components/Hero";
-import { About } from "@/app/components/About";
-import { Services } from "@/app/components/Services";
-import { HowItWorks } from "@/app/components/HowItWorks";
-import { HoursLocation } from "@/app/components/HoursLocation";
-import { Faq } from "@/app/components/Faq";
-import { ContactForm } from "@/app/components/ContactForm";
-import { SiteFooter } from "@/app/components/SiteFooter";
+import { AppShell } from "@/app/components/AppShell";
 import { personJsonLd, businessJsonLd } from "@/app/lib/jsonLd";
 
+// Server component: emits canonical JSON-LD (English) so a name search resolves
+// the clinic, then hands off to the client AppShell which owns the bilingual UI.
 export default function Page() {
   return (
     <>
-      {/* JSON-LD emitted server-side so a name search resolves the clinic. */}
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd) }}
@@ -21,25 +14,7 @@ export default function Page() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(businessJsonLd) }}
       />
-
-      {/* First focusable element: skip-link to <main>. */}
-      <a className="skip-link" href="#main">
-        דילוג לתוכן
-      </a>
-
-      <SiteHeader />
-
-      <main id="main" tabIndex={-1}>
-        <Hero />
-        <About />
-        <Services />
-        <HowItWorks />
-        <HoursLocation />
-        <Faq />
-        <ContactForm />
-      </main>
-
-      <SiteFooter />
+      <AppShell />
     </>
   );
 }
