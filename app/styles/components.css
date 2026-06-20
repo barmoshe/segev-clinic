@@ -26,6 +26,19 @@
 }
 .btn-ghost:hover { background: var(--surface-2); }
 
+/* WhatsApp action button: the primary contact CTA. Its own accessible green,
+ * separate from the brand ramp, with the brand glyph sized up a touch. */
+.btn-whatsapp {
+  background: var(--whatsapp); color: var(--whatsapp-text);
+  border-color: transparent;
+  box-shadow: var(--shadow-1);
+}
+.btn-whatsapp:hover { background: var(--whatsapp-hover); }
+.btn-whatsapp svg { font-size: 1.25em; }
+
+/* Compact button (header). */
+.btn-sm { padding: var(--space-2) var(--space-4); }
+
 /* --- Form field (label + control + inline error) --- */
 .field { display: flex; flex-direction: column; gap: var(--space-2); }
 .field > label { font-weight: 600; font-size: var(--step--1); }

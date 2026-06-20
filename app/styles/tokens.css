@@ -6,36 +6,41 @@
  * pairs are chosen to clear WCAG AA (>= 4.5:1). Dark mode overrides live in the
  * same file under html.dark so the two themes always ship together.
  *
- * To re-brand for a client: change --hue (and optionally --hue-accent) and the
- * two or three primary ramp steps. The rest cascades.
+ * Clinic reskin (refined): a confident teal brand + a warm sand accent for
+ * decorative touches + a dedicated, accessible WhatsApp green for contact CTAs.
+ * Richer than the first pass (chroma lifted, real complementary accent, soft
+ * depth) while staying calm and clinical.
  */
 
 :root {
-  /* Native UI (form controls, scrollbars, system colors) follows the theme.
-   * Tracks the .dark class below, so it matches both the manual toggle and the
-   * auto/system resolution done by the pre-paint script. (web.dev/light-dark,
-   * MDN color-scheme - baseline since 2024.) */
   color-scheme: light;
 
-  /* --- brand hue knobs (calm clinical reskin: soft teal / blue-green) --- */
-  --hue: 195;          /* primary brand hue (deg): cool restful teal */
-  --hue-accent: 165;   /* secondary/accent hue: green-teal */
-  --chroma: 0.07;      /* brand saturation: low, for a calm clinical feel */
+  /* --- brand hue knobs --- */
+  --hue: 198;          /* primary brand hue (deg): confident restful teal */
+  --hue-accent: 52;    /* warm sand/amber accent, complementary to the teal */
+  --chroma: 0.10;      /* brand saturation: present but calm */
 
   /* --- semantic surfaces & text (light) --- */
-  --bg:        oklch(0.99 0.004 var(--hue));
-  --surface:   oklch(0.97 0.006 var(--hue));
-  --surface-2: oklch(0.94 0.008 var(--hue));
-  --border:    oklch(0.88 0.01 var(--hue));
-  --text:      oklch(0.22 0.02 var(--hue));   /* on --bg: AA */
-  --text-soft: oklch(0.44 0.02 var(--hue));   /* secondary text: AA on --bg */
-  --text-faint:oklch(0.58 0.015 var(--hue));  /* hints/placeholders */
+  --bg:        oklch(0.99 0.006 var(--hue));
+  --surface:   oklch(0.975 0.009 var(--hue));
+  --surface-2: oklch(0.945 0.013 var(--hue));
+  --border:    oklch(0.88 0.016 var(--hue));
+  --text:      oklch(0.24 0.025 var(--hue));   /* on --bg: AA */
+  --text-soft: oklch(0.46 0.025 var(--hue));   /* secondary text: AA on --bg */
+  --text-faint:oklch(0.58 0.02 var(--hue));    /* hints/placeholders */
 
   /* --- brand ramp --- */
-  --primary:      oklch(0.55 var(--chroma) var(--hue));
-  --primary-hover:oklch(0.49 var(--chroma) var(--hue));
+  --primary:      oklch(0.52 var(--chroma) var(--hue));
+  --primary-hover:oklch(0.45 var(--chroma) var(--hue));
   --primary-text: oklch(0.99 0.01 var(--hue)); /* text on --primary: AA */
-  --accent:       oklch(0.70 0.15 var(--hue-accent));
+  --primary-soft: oklch(0.95 0.03 var(--hue)); /* tinted fill behind icons */
+  --accent:       oklch(0.74 0.11 var(--hue-accent));
+  --accent-soft:  oklch(0.93 0.05 var(--hue-accent));
+
+  /* --- WhatsApp action color (deepened from brand green for AA on white) --- */
+  --whatsapp:      oklch(0.55 0.15 150);
+  --whatsapp-hover:oklch(0.49 0.15 150);
+  --whatsapp-text: oklch(0.99 0.02 150);
 
   /* --- status --- */
   --ok:    oklch(0.62 0.15 150);
@@ -62,8 +67,10 @@
 
   /* --- radii, shadow, motion --- */
   --radius-sm: 0.375rem; --radius: 0.625rem; --radius-lg: 1rem; --radius-full: 999px;
-  --shadow-1: 0 1px 2px oklch(0.2 0.02 var(--hue) / 0.08);
-  --shadow-2: 0 4px 16px oklch(0.2 0.02 var(--hue) / 0.12);
+  --shadow-1: 0 1px 2px oklch(0.3 0.03 var(--hue) / 0.06),
+              0 4px 12px oklch(0.3 0.03 var(--hue) / 0.08);
+  --shadow-2: 0 2px 6px oklch(0.3 0.03 var(--hue) / 0.08),
+              0 16px 40px oklch(0.3 0.03 var(--hue) / 0.14);
   --dur-1: 120ms; --dur-2: 240ms; --dur-3: 400ms;
   --ease: cubic-bezier(0.2, 0.7, 0.2, 1);
 
@@ -77,23 +84,27 @@
 
 html.dark {
   color-scheme: dark;
-  /* --- brand hue knobs (calm clinical reskin, mirrored for dark) --- */
-  --hue: 195;          /* cool restful teal */
-  --hue-accent: 165;   /* green-teal */
-  --chroma: 0.07;      /* low chroma, calm clinical */
-  --bg:        oklch(0.17 0.015 var(--hue));
-  --surface:   oklch(0.21 0.018 var(--hue));
-  --surface-2: oklch(0.25 0.02 var(--hue));
-  --border:    oklch(0.32 0.02 var(--hue));
-  --text:      oklch(0.94 0.01 var(--hue));   /* on dark --bg: AA */
-  --text-soft: oklch(0.78 0.015 var(--hue));
-  --text-faint:oklch(0.62 0.015 var(--hue));
-  --primary:      oklch(0.72 var(--chroma) var(--hue));
-  --primary-hover:oklch(0.78 var(--chroma) var(--hue));
-  --primary-text: oklch(0.18 0.02 var(--hue));
-  --accent:       oklch(0.78 0.14 var(--hue-accent));
-  --shadow-1: 0 1px 2px oklch(0 0 0 / 0.4);
-  --shadow-2: 0 6px 24px oklch(0 0 0 / 0.5);
+  --hue: 205;          /* a touch bluer in the dark for depth */
+  --hue-accent: 52;
+  --chroma: 0.09;
+  --bg:        oklch(0.17 0.018 230);
+  --surface:   oklch(0.21 0.022 230);
+  --surface-2: oklch(0.26 0.026 230);
+  --border:    oklch(0.34 0.026 230);
+  --text:      oklch(0.95 0.012 var(--hue));   /* on dark --bg: AA */
+  --text-soft: oklch(0.80 0.018 var(--hue));
+  --text-faint:oklch(0.64 0.018 var(--hue));
+  --primary:      oklch(0.74 var(--chroma) var(--hue));
+  --primary-hover:oklch(0.82 var(--chroma) var(--hue));
+  --primary-text: oklch(0.17 0.02 var(--hue));
+  --primary-soft: oklch(0.30 0.05 var(--hue));
+  --accent:       oklch(0.80 0.12 var(--hue-accent));
+  --accent-soft:  oklch(0.32 0.06 var(--hue-accent));
+  --whatsapp:      oklch(0.60 0.15 150);
+  --whatsapp-hover:oklch(0.66 0.15 150);
+  --whatsapp-text: oklch(0.99 0.02 150);
+  --shadow-1: 0 1px 2px oklch(0 0 0 / 0.4), 0 4px 14px oklch(0 0 0 / 0.4);
+  --shadow-2: 0 2px 8px oklch(0 0 0 / 0.5), 0 18px 44px oklch(0 0 0 / 0.55);
 }
 
 /* Higher-contrast preference (mirrored by the pre-paint script). */
