@@ -1,14 +1,18 @@
-import { steps } from "@/app/lib/content";
+"use client";
 
-// How a visit works: 3-4 step flow to reduce friction.
+import { useLang } from "@/app/lib/LangContext";
+
+// How a visit works: a 4-step flow rendered as a connected timeline to reduce
+// friction. The numbers carry the sequence; the connector is decorative.
 export function HowItWorks() {
+  const { t } = useLang();
   return (
     <section className="section" aria-labelledby="how-title">
       <div className="container">
-        <h2 id="how-title">איך זה עובד</h2>
+        <h2 id="how-title">{t.steps.title}</h2>
         <ol className="steps" role="list">
-          {steps.map((step) => (
-            <li key={step.n} className="card step-card">
+          {t.steps.items.map((step) => (
+            <li key={step.n} className="step-card">
               <span className="step-num" aria-hidden="true">
                 {step.n}
               </span>

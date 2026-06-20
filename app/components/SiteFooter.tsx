@@ -1,14 +1,14 @@
-import { clinic } from "@/app/lib/clinic";
+"use client";
+
+import { useLang } from "@/app/lib/LangContext";
 
 // Footer with the placeholder disclaimer: nothing here implies a real person.
 export function SiteFooter() {
+  const { t } = useLang();
   return (
     <footer className="site-footer">
       <div className="container">
-        <p className="footer-note">
-          {clinic.doctorName} היא דמות לדוגמה. זהו אתר הדגמה (lab) ואינו מרפאה
-          פעילה. הפרטים והכתובת הם דמה בלבד.
-        </p>
+        <p className="footer-note">{t.footer.disclaimer}</p>
       </div>
     </footer>
   );

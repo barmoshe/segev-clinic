@@ -1,6 +1,7 @@
 "use client";
 
 import { useId, useState } from "react";
+import { useLang } from "@/app/lib/LangContext";
 import {
   buildWhatsAppHref,
   buildMailtoHref,
@@ -8,11 +9,14 @@ import {
   composeMailSubject,
   type ContactFields,
 } from "@/app/lib/contact";
+import { WhatsAppGlyph } from "./icons";
 
 // Contact / appointment request. Purely an OUTBOUND-MESSAGE COMPOSER: on submit
 // it builds a prefilled wa.me link and a mailto: fallback from the field values.
 // NO backend, NO database, NO storing/transmitting PII server-side, no analytics.
+// WhatsApp is the primary send action; email is a quiet secondary fallback.
 export function ContactForm() {
+  const { t } = useLang();
   const nameId = useId();
   const phoneId = useId();
   const reasonId = useId();
@@ -31,25 +35,26 @@ export function ContactForm() {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const message = composeMessage(fields);
+    const message = composeMessage(t, fields);
     setLinks({
       wa: buildWhatsAppHref(message),
-      mail: buildMailtoHref(composeMailSubject(fields.name), message),
+      mail: buildMailtoHref(composeMailSubject(t, fields.name), message),
     });
   };
 
   return (
-    <section className="section section-alt" aria-labelledby="contact-title">
+    <section
+      id="contact"
+      className="section section-contact"
+      aria-labelledby="contact-title"
+    >
       <div className="container narrow">
-        <h2 id="contact-title">קביעת תור / השארת פרטים</h2>
-        <p className="section-lead">
-          ממלאים את הפרטים, והכפתור פותח הודעה מוכנה בוואטסאפ או באימייל. הפרטים
-          לא נשמרים בשום מקום: הם נשלחים ישירות מהמכשיר שלכם.
-        </p>
+        <h2 id="contact-title">{t.contact.title}</h2>
+        <p className="section-lead">{t.contact.lead}</p>
 
         <form className="contact-form" onSubmit={handleSubmit} noValidate>
           <div className="field">
-            <label htmlFor={nameId}>שם מלא</label>
+            <label htmlFor={nameId}>{t.contact.name}</label>
             <input
               id={nameId}
               name="name"
@@ -62,7 +67,7 @@ export function ContactForm() {
           </div>
 
           <div className="field">
-            <label htmlFor={phoneId}>טלפון</label>
+            <label htmlFor={phoneId}>{t.contact.phone}</label>
             <input
               id={phoneId}
               name="phone"
@@ -76,7 +81,7 @@ export function ContactForm() {
           </div>
 
           <div className="field">
-            <label htmlFor={reasonId}>סיבת הפנייה</label>
+            <label htmlFor={reasonId}>{t.contact.reason}</label>
             <textarea
               id={reasonId}
               name="reason"
@@ -87,25 +92,26 @@ export function ContactForm() {
           </div>
 
           <button type="submit" className="btn">
-            הכנת הודעה
+            {t.contact.submit}
           </button>
         </form>
 
         <div className="form-result" aria-live="polite">
           {links && (
             <div className="callout callout-ok">
-              <p>ההודעה מוכנה. בחרו איך לשלוח אותה:</p>
+              <p>{t.contact.resultLead}</p>
               <div className="result-actions">
                 <a
-                  className="btn"
+                  className="btn btn-whatsapp"
                   href={links.wa}
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  שליחה בוואטסאפ
+                  <WhatsAppGlyph />
+                  <span>{t.contact.sendWhatsApp}</span>
                 </a>
-                <a className="btn btn-ghost" href={links.mail}>
-                  שליחה באימייל
+                <a className="link-email" href={links.mail}>
+                  {t.contact.sendEmail}
                 </a>
               </div>
             </div>

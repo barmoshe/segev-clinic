@@ -1,25 +1,31 @@
-import { clinic, telHref } from "@/app/lib/clinic";
-import { whatsappHref } from "@/app/lib/contact";
-import { hours } from "@/app/lib/content";
+"use client";
 
-// Hours + location: opening hours table, address, a plain map LINK (no embedded
+import { useLang } from "@/app/lib/LangContext";
+import { clinic, telHref, mapUrl } from "@/app/lib/clinic";
+import { defaultWhatsAppHref } from "@/app/lib/contact";
+import { WhatsAppGlyph } from "./icons";
+
+// Hours + location: opening-hours table, address, a plain map LINK (no embedded
 // tracking iframe), tap-to-call, and a WhatsApp link.
 export function HoursLocation() {
+  const { t, lang } = useLang();
   return (
     <section className="section section-alt" aria-labelledby="hours-title">
       <div className="container hours-grid">
         <div>
-          <h2 id="hours-title">שעות וכתובת</h2>
+          <h2 id="hours-title">{t.hoursLocation.title}</h2>
           <table className="hours-table">
-            <caption className="visually-hidden">שעות הפעילות של המרפאה</caption>
+            <caption className="visually-hidden">
+              {t.hoursLocation.caption}
+            </caption>
             <thead>
               <tr>
-                <th scope="col">יום</th>
-                <th scope="col">שעות</th>
+                <th scope="col">{t.hoursLocation.colDay}</th>
+                <th scope="col">{t.hoursLocation.colTime}</th>
               </tr>
             </thead>
             <tbody>
-              {hours.map((row) => (
+              {t.hoursLocation.rows.map((row) => (
                 <tr key={row.day}>
                   <th scope="row">{row.day}</th>
                   <td>{row.time}</td>
@@ -30,20 +36,30 @@ export function HoursLocation() {
         </div>
 
         <div className="hours-contact">
-          <h3>כתובת ויצירת קשר</h3>
-          <address className="clinic-address">{clinic.addressLine}</address>
+          <h3>{t.hoursLocation.contactTitle}</h3>
+          <address className="clinic-address">
+            {clinic.addressLine[lang]}
+          </address>
           <ul className="link-list" role="list">
             <li>
-              <a href={clinic.mapUrl} target="_blank" rel="noopener noreferrer">
-                פתיחת מפה במפת רחובות
+              <a href={mapUrl(lang)} target="_blank" rel="noopener noreferrer">
+                {t.hoursLocation.mapLink}
               </a>
             </li>
             <li>
-              <a href={telHref}>חיוג: {clinic.phone}</a>
+              <a href={telHref}>
+                {t.hoursLocation.callLabel}: {clinic.phone}
+              </a>
             </li>
             <li>
-              <a href={whatsappHref} target="_blank" rel="noopener noreferrer">
-                שליחת הודעה בוואטסאפ
+              <a
+                className="link-whatsapp"
+                href={defaultWhatsAppHref(t)}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <WhatsAppGlyph />
+                <span>{t.hoursLocation.whatsappLink}</span>
               </a>
             </li>
           </ul>
