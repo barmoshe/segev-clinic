@@ -14,7 +14,7 @@
   padding: var(--space-3) var(--space-5);
   background: var(--primary); color: var(--primary-text);
   border: 1px solid transparent; border-radius: var(--radius);
-  font-weight: 600; line-height: 1; cursor: pointer;
+  font-weight: 600; line-height: 1; cursor: pointer; text-decoration: none;
   transition: background var(--dur-1) var(--ease), border-color var(--dur-1) var(--ease);
 }
 .btn:hover { background: var(--primary-hover); }

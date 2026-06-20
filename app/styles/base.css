@@ -38,7 +38,9 @@ h4 { font-size: var(--step-1); }
 p, li { max-width: var(--measure); text-wrap: pretty; }
 
 a { color: var(--primary); text-underline-offset: 0.15em; }
-a:hover { color: var(--primary-hover); }
+/* Exclude button-styled links: they own their text color, and the link-hover
+   color would otherwise override it (e.g. teal text on a teal button = invisible). */
+a:not(.btn):not(.wa-fab):hover { color: var(--primary-hover); }
 
 img, picture, svg, video, canvas { display: block; max-width: 100%; height: auto; }
 input, button, textarea, select { font: inherit; color: inherit; }
