@@ -189,7 +189,7 @@ html.dark .site-header {
 }
 .hero-title {
   font-size: var(--step-4);
-  letter-spacing: -0.01em;
+  font-weight: 800;
   margin-bottom: var(--space-4);
 }
 .hero-promise {
