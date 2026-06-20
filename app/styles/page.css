@@ -1,8 +1,10 @@
 /* page.css - clinic-specific layout. Imported last (after tokens/base/components).
- * Calm clinical: generous whitespace, restful surfaces, oklch tokens only.
- * Motion is limited to transform/opacity and honors prefers-reduced-motion. */
+ * Refined calm-clinical: confident teal + warm accent, soft depth, line icons,
+ * a tracked step flow, a floating WhatsApp button. oklch tokens + logical
+ * properties only (LTR/RTL safe). Motion is transform/opacity and honors
+ * prefers-reduced-motion (base.css neutralizes animation under reduce). */
 
-/* --- visually-hidden helper (for table captions etc.) --- */
+/* --- visually-hidden helper --- */
 .visually-hidden {
   position: absolute;
   width: 1px;
@@ -23,11 +25,24 @@
   background: var(--surface);
 }
 .section h2 {
-  margin-bottom: var(--space-5);
+  margin-bottom: var(--space-4);
+}
+/* A short accent bar under each section title for rhythm and character. */
+.section h2::after,
+.hours-contact h3::after {
+  content: "";
+  display: block;
+  width: 2.5rem;
+  height: 3px;
+  margin-top: var(--space-3);
+  border-radius: var(--radius-full);
+  background: linear-gradient(90deg, var(--primary), var(--accent));
 }
 .section-lead {
   color: var(--text-soft);
+  font-size: var(--step-1);
   margin-bottom: var(--space-6);
+  max-width: var(--measure);
 }
 .narrow {
   max-width: 54rem;
@@ -44,12 +59,12 @@
   position: sticky;
   top: 0;
   z-index: 50;
-  background: oklch(0.99 0.004 var(--hue) / 0.9);
-  backdrop-filter: blur(8px);
+  background: oklch(0.99 0.006 var(--hue) / 0.82);
+  backdrop-filter: blur(10px);
   border-bottom: 1px solid var(--border);
 }
 html.dark .site-header {
-  background: oklch(0.17 0.015 var(--hue) / 0.9);
+  background: oklch(0.17 0.018 230 / 0.82);
 }
 .site-header-inner {
   display: flex;
@@ -62,29 +77,78 @@ html.dark .site-header {
   font-weight: 700;
   font-size: var(--step-1);
 }
-.header-call {
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+/* --- language toggle (segmented pill) --- */
+.lang-toggle {
+  display: inline-flex;
+  gap: 2px;
+  padding: 3px;
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-full);
+}
+.lang-toggle__btn {
+  border: 0;
+  background: transparent;
+  color: var(--text-soft);
+  padding: var(--space-1) var(--space-3);
+  border-radius: var(--radius-full);
   font-weight: 600;
   font-size: var(--step--1);
-  white-space: nowrap;
+  cursor: pointer;
+  transition: background var(--dur-1) var(--ease), color var(--dur-1) var(--ease);
+}
+.lang-toggle__btn:hover {
+  color: var(--text);
+}
+.lang-toggle__btn.is-active {
+  background: var(--bg);
+  color: var(--text);
+  box-shadow: var(--shadow-1);
 }
 
 /* --- hero --- */
 .hero {
+  position: relative;
+  overflow: clip;
   padding-block: var(--space-9);
   background:
-    radial-gradient(
-      120% 120% at 100% 0%,
-      var(--surface) 0%,
-      var(--bg) 60%
-    );
+    radial-gradient(120% 130% at 100% 0%, var(--surface) 0%, var(--bg) 55%);
+}
+.hero-glow {
+  position: absolute;
+  inset-block-start: -25%;
+  inset-inline-end: -10%;
+  inline-size: 42rem;
+  block-size: 42rem;
+  max-inline-size: 85%;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at 70% 30%, var(--primary-soft) 0%, transparent 60%),
+    radial-gradient(circle at 30% 70%, var(--accent-soft) 0%, transparent 55%);
+  filter: blur(6px);
+  opacity: 0.9;
+  animation: hero-float 14s var(--ease) infinite alternate;
+}
+@keyframes hero-float {
+  from { transform: translate3d(0, 0, 0) scale(1); }
+  to   { transform: translate3d(-2%, 3%, 0) scale(1.06); }
 }
 .hero-inner {
+  position: relative;
   max-width: 56rem;
 }
 .hero-eyebrow {
   color: var(--primary);
-  font-weight: 600;
-  letter-spacing: 0.02em;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  font-size: var(--step--1);
   margin-bottom: var(--space-3);
 }
 .hero-title {
@@ -94,8 +158,25 @@ html.dark .site-header {
 .hero-promise {
   font-size: var(--step-1);
   color: var(--text-soft);
-  max-width: 44ch;
-  margin-bottom: var(--space-6);
+  max-width: 46ch;
+  margin-bottom: var(--space-5);
+}
+.hero-trust {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 var(--space-6);
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+.hero-trust__item {
+  font-size: var(--step--1);
+  font-weight: 600;
+  color: var(--text-soft);
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-full);
+  padding: var(--space-2) var(--space-4);
 }
 .hero-actions {
   display: flex;
@@ -108,8 +189,31 @@ html.dark .site-header {
   list-style: none;
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(16rem, 1fr));
-  gap: var(--space-4);
+  gap: var(--space-5);
   padding: 0;
+}
+.service-card {
+  display: flex;
+  flex-direction: column;
+  transition: transform var(--dur-2) var(--ease), box-shadow var(--dur-2) var(--ease),
+    border-color var(--dur-2) var(--ease);
+}
+.service-card:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-2);
+  border-color: var(--primary-soft);
+}
+.service-card__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  inline-size: 2.75rem;
+  block-size: 2.75rem;
+  border-radius: var(--radius);
+  background: var(--primary-soft);
+  color: var(--primary);
+  font-size: 1.5rem;
+  margin-bottom: var(--space-3);
 }
 .service-card h3 {
   font-size: var(--step-1);
@@ -120,29 +224,45 @@ html.dark .site-header {
   margin: 0;
 }
 
-/* --- steps (how it works) --- */
+/* --- steps (how it works) as tracked cards --- */
 .steps {
   list-style: none;
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr));
-  gap: var(--space-4);
+  grid-template-columns: 1fr;
+  gap: var(--space-5);
   padding: 0;
-  counter-reset: step;
 }
 .step-card {
   position: relative;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-5);
+  padding-inline-start: var(--space-6);
+  box-shadow: var(--shadow-1);
+}
+.step-card::before {
+  content: "";
+  position: absolute;
+  inset-block: var(--space-5);
+  inset-inline-start: 0;
+  inline-size: 4px;
+  border-radius: var(--radius-full);
+  background: linear-gradient(var(--primary), var(--accent));
 }
 .step-num {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 2.25rem;
-  height: 2.25rem;
+  inline-size: 2.5rem;
+  block-size: 2.5rem;
   border-radius: var(--radius-full);
   background: var(--primary);
   color: var(--primary-text);
   font-weight: 700;
+  font-size: var(--step-1);
   margin-bottom: var(--space-3);
+  box-shadow: var(--shadow-1);
 }
 .step-card h3 {
   font-size: var(--step-1);
@@ -151,6 +271,12 @@ html.dark .site-header {
 .step-card p {
   color: var(--text-soft);
   margin: 0;
+}
+@media (min-width: 48rem) {
+  .steps { grid-template-columns: repeat(2, 1fr); }
+}
+@media (min-width: 64rem) {
+  .steps { grid-template-columns: repeat(4, 1fr); }
 }
 
 /* --- hours + location --- */
@@ -193,6 +319,16 @@ html.dark .site-header {
   flex-direction: column;
   gap: var(--space-3);
 }
+.link-whatsapp {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  color: var(--whatsapp);
+  font-weight: 600;
+}
+.link-whatsapp svg {
+  font-size: 1.2em;
+}
 
 /* --- faq (native details/summary) --- */
 .faq-list {
@@ -205,6 +341,10 @@ html.dark .site-header {
   border: 1px solid var(--border);
   border-radius: var(--radius);
   padding: var(--space-4) var(--space-5);
+  transition: border-color var(--dur-1) var(--ease);
+}
+.faq-item[open] {
+  border-color: var(--primary-soft);
 }
 .faq-item > summary {
   cursor: pointer;
@@ -225,6 +365,9 @@ html.dark .site-header {
 }
 
 /* --- contact form --- */
+.section-contact {
+  background: linear-gradient(var(--surface), var(--bg));
+}
 .contact-form {
   display: flex;
   flex-direction: column;
@@ -241,7 +384,56 @@ html.dark .site-header {
 .result-actions {
   display: flex;
   flex-wrap: wrap;
-  gap: var(--space-3);
+  align-items: center;
+  gap: var(--space-4);
+}
+.link-email {
+  color: var(--text-soft);
+  text-decoration: underline;
+  text-underline-offset: 0.15em;
+}
+
+/* --- floating WhatsApp button (dir-aware via logical inset) --- */
+.wa-fab {
+  position: fixed;
+  z-index: 80;
+  inset-block-end: var(--space-5);
+  inset-inline-end: var(--space-5);
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-3) var(--space-5);
+  background: var(--whatsapp);
+  color: var(--whatsapp-text);
+  border-radius: var(--radius-full);
+  box-shadow: var(--shadow-2);
+  font-weight: 700;
+  text-decoration: none;
+  transition: transform var(--dur-1) var(--ease), background var(--dur-1) var(--ease);
+}
+.wa-fab:hover {
+  background: var(--whatsapp-hover);
+  color: var(--whatsapp-text);
+  transform: translateY(-2px);
+}
+.wa-fab__glyph {
+  font-size: 1.5em;
+}
+@media (max-width: 28rem) {
+  .wa-fab {
+    padding: var(--space-4);
+  }
+  .wa-fab__label {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+  }
+  .wa-fab__glyph {
+    font-size: 1.75em;
+  }
 }
 
 /* --- footer --- */
