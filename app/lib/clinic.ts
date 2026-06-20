@@ -18,8 +18,8 @@ export const clinic = {
   mapUrl: "https://www.openstreetmap.org/search?query=" +
     encodeURIComponent("רחוב הדוגמה 12, תל אביב"),
 
-  // Canonical site URL: clearly-placeholder, swap on real deploy.
-  siteUrl: "https://segev-clinic.example.com",
+  // Canonical site URL: the live Vercel deploy.
+  siteUrl: "https://segev-clinic.vercel.app",
 } as const;
 
 // wa.me wants the international number with no "+".
