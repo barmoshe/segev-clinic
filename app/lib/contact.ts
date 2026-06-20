@@ -1,45 +1,43 @@
-// Outbound-message composer. Mirrors site/src/marketing/contact.ts:
-// the contact form NEVER stores or transmits PII server-side. It only builds
-// a prefilled WhatsApp (wa.me) link and a mailto: fallback from the field
-// values, both opened by the visitor's own client.
+// Outbound-message composer. The contact form NEVER stores or transmits PII
+// server-side. It only builds a prefilled WhatsApp (wa.me) link and a mailto:
+// fallback from the field values, both opened by the visitor's own client.
+//
+// Every default string is language-aware: it is sourced from the active dict so
+// the prefilled message matches the language the visitor is reading.
 
 import { clinic, whatsappNumber } from "./clinic";
-
-const DEFAULT_MAIL_SUBJECT = `פנייה לקביעת תור: ${clinic.doctorName}`;
-const DEFAULT_WHATSAPP_TEXT =
-  `שלום, אשמח לקבוע תור / לקבל פרטים אצל ${clinic.doctorName}.`;
+import type { Dict } from "./i18n";
 
 export const mailRecipient = clinic.email;
 
-export const buildMailtoHref = (
-  subject: string = DEFAULT_MAIL_SUBJECT,
-  body: string = "",
-) =>
+export const buildMailtoHref = (subject: string, body: string = "") =>
   `mailto:${mailRecipient}?subject=${encodeURIComponent(subject)}` +
   (body ? `&body=${encodeURIComponent(body)}` : "");
 
-export const mailtoHref = buildMailtoHref();
-
-export const buildWhatsAppHref = (text: string = DEFAULT_WHATSAPP_TEXT) =>
+export const buildWhatsAppHref = (text: string) =>
   `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(text)}`;
 
-export const whatsappHref = buildWhatsAppHref();
+// The bare links (no form fields) used by the header, hero and floating button.
+export const defaultWhatsAppHref = (t: Dict) =>
+  buildWhatsAppHref(t.whatsapp.defaultText);
 
-// Compose the human-readable message from the three form fields. Used for both
-// the WhatsApp text and the mailto body, so the doctor receives the same note
-// whichever channel the visitor picks.
+export const defaultMailtoHref = (t: Dict) =>
+  buildMailtoHref(t.whatsapp.mailSubject);
+
 export type ContactFields = {
   name: string;
   phone: string;
   reason: string;
 };
 
-export const composeMessage = ({ name, phone, reason }: ContactFields) =>
+// Compose the human-readable message from the three form fields, labelled in the
+// active language. Used for both the WhatsApp text and the mailto body.
+export const composeMessage = (t: Dict, { name, phone, reason }: ContactFields) =>
   [
-    `שם: ${name || "לא צוין"}`,
-    `טלפון: ${phone || "לא צוין"}`,
-    `סיבת הפנייה: ${reason || "לא צוינה"}`,
+    `${t.contact.fieldName}: ${name || t.contact.notProvided}`,
+    `${t.contact.fieldPhone}: ${phone || t.contact.notProvided}`,
+    `${t.contact.fieldReason}: ${reason || t.contact.notProvided}`,
   ].join("\n");
 
-export const composeMailSubject = (name: string) =>
-  `פנייה לקביעת תור: ${name || ""}`.trim();
+export const composeMailSubject = (t: Dict, name: string) =>
+  `${t.whatsapp.mailSubject}${name ? ` (${name})` : ""}`;
